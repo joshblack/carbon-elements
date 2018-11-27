@@ -1,0 +1,38 @@
+{
+  "name": "sketch",
+  "private": true,
+  "version": "0.0.1-alpha.17",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/IBM/carbon-elements/tree/master/packages/sketch",
+  "bugs": "https://github.com/IBM/carbon-elements/issues",
+  "keywords": [
+    "ibm",
+    "elements",
+    "carbon",
+    "carbon-elements",
+    "carbon-design-system"
+  ],
+  "skpm": {
+    "main": "ibm-elements.sketchplugin",
+    "manifest": "src/manifest.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "skpm-build",
+    "watch": "skpm-build --watch",
+    "render": "skpm-build --watch --run",
+    "render:once": "skpm-build --run"
+  },
+  "dependencies": {
+    "@carbon/colors": "0.0.1-alpha.17",
+    "@carbon/icons": "0.0.1-alpha.17"
+  },
+  "devDependencies": {
+    "@skpm/builder": "^0.5.11",
+    "react": "^16.6.0",
+    "react-sketchapp": "^2.1.1",
+    "react-test-renderer": "^16.6.0"
+  }
+}
