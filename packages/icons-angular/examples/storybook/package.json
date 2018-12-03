@@ -24,5 +24,8 @@
     "tslint": "4",
     "typescript": "2.9.2",
     "zone.js": "~0.8.26"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.2"
   }
 }
