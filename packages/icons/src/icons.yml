@@ -1,0 +1,19 @@
+---
+icons:
+- name: Icon name
+  description: >
+    This is the icon description
+  usage:
+  - usage 1
+  - usage 2
+  - usage 3
+  keywords:
+  - keyword 1
+  - keyword 2
+  - keyword 3
+  sizes:
+  - size: glyph
+  - size: 16
+  - size: 32
+  variants:
+  - name: variant name
