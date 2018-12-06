@@ -137,3 +137,12 @@ export const spacing = [
   miniUnits(10),
   miniUnits(12),
 ];
+
+export const keyHeights = [
+  rem(80),
+  rem(80 * 2),
+  rem(80 * 3),
+  rem(80 * 4),
+  rem(80 * 5),
+  rem(80 * 6),
+];

@@ -1,0 +1,21 @@
+@import 'flags';
+@import '~carbon-components/scss/components/ui-shell/ui-shell';
+@import '@carbon/grid/scss/grid';
+@import '@carbon/type/scss/type';
+@import 'components/components';
+
+html,
+body,
+#___gatsby,
+#___gatsby > [role='group'] {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+}
+
+#___gatsby > [role='group'] > * {
+  overflow-y: auto;
+}

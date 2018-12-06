@@ -1,4 +1,4 @@
-import { baseFontSize, px } from '@carbon/layout';
+import { baseFontSize, rem, px } from '@carbon/layout';
 
 // Font family fallbacks for: IBM Plex Mono, IBM Plex Sans, IBM Plex Sans
 // Condensed, IBM Plex Sans Hebrew, and IBM Plex Serif
@@ -67,14 +67,14 @@ export function getTypeSize(step) {
   return getTypeSize(step - 1) + Math.floor((step - 2) / 4 + 1) * 2;
 }
 
-export const typeScale = Array.from({ length: 16 }, (_, i) =>
+export const typeScale = Array.from({ length: 23 }, (_, i) =>
   getTypeSize(i + 1)
 );
 
 // Tokens
 export const component01 = {
   fontFamily: fontFamilies.sans,
-  fontSize: typeScale(2),
+  fontSize: typeScale[1],
   fontWeight: fontWeights.regular,
   lineHeight: rem(18),
   letterSpacing: px(0.16),
@@ -82,7 +82,7 @@ export const component01 = {
 
 export const componentBody01 = {
   fontFamily: fontFamilies.sans,
-  fontSize: typeScale(2),
+  fontSize: typeScale[1],
   fontWeight: fontWeights.regular,
   lineHeight: rem(20),
   letterSpacing: px(0.16),
@@ -90,7 +90,7 @@ export const componentBody01 = {
 
 export const componentHeader01 = {
   fontFamily: fontFamilies.sans,
-  fontSize: typeScale(2),
+  fontSize: typeScale[1],
   fontWeight: fontWeights.semibold,
   lineHeight: rem(18),
   letterSpacing: px(0.16),
@@ -98,7 +98,7 @@ export const componentHeader01 = {
 
 export const component02 = {
   fontFamily: fontFamilies.sans,
-  fontSize: typeScale(3),
+  fontSize: typeScale[2],
   fontWeight: fontWeights.regular,
   lineHeight: rem(22),
   letterSpacing: px(0),
@@ -106,7 +106,7 @@ export const component02 = {
 
 export const componentBody02 = {
   fontFamily: fontFamilies.sans,
-  fontSize: typeScale(3),
+  fontSize: typeScale[2],
   fontWeight: fontWeights.regular,
   lineHeight: rem(24),
   letterSpacing: px(0),
@@ -114,7 +114,7 @@ export const componentBody02 = {
 
 export const label01 = {
   fontFamily: fontFamilies.sans,
-  fontSize: typeScale(1),
+  fontSize: typeScale[0],
   fontWeight: fontWeights.regular,
   lineHeight: rem(16),
   letterSpacing: px(0.32),
@@ -122,7 +122,7 @@ export const label01 = {
 
 export const helperText01 = {
   fontFamily: fontFamilies.sans,
-  fontSize: typeScale(1),
+  fontSize: typeScale[0],
   fontWeight: fontWeights.regular,
   fontStyle: 'italic',
   lineHeight: rem(16),
@@ -132,7 +132,7 @@ export const helperText01 = {
 export const code01 = {
   fontFamily: fontFamilies.mono,
   fontWeight: fontWeights.regular,
-  fontSize: typeScale(1),
+  fontSize: typeScale[0],
   lineHeight: rem(16),
   letterSpacing: px(0.32),
 };
@@ -140,14 +140,14 @@ export const code01 = {
 export const code02 = {
   fontFamily: fontFamilies.mono,
   fontWeight: fontWeights.regular,
-  fontSize: typeScale(2),
+  fontSize: typeScale[1],
   lineHeight: rem(20),
   letterSpacing: px(0.32),
 };
 
 export const heading01 = {
   fontFamily: fontFamilies.sans,
-  fontSize: typeScale(5),
+  fontSize: typeScale[4],
   fontWeight: fontWeights.regular,
   lineHeight: rem(26),
   letterSpacing: px(0),
@@ -155,7 +155,7 @@ export const heading01 = {
 
 export const heading02 = {
   fontFamily: fontFamilies.sans,
-  fontSize: typeScale(6),
+  fontSize: typeScale[5],
   fontWeight: fontWeights.regular,
   lineHeight: rem(30),
   letterSpacing: px(0),
@@ -163,7 +163,7 @@ export const heading02 = {
 
 export const heading03 = {
   fontFamily: fontFamilies.sans,
-  fontSize: typeScale(8),
+  fontSize: typeScale[7],
   fontWeight: fontWeights.regular,
   lineHeight: rem(40),
   letterSpacing: px(0),
@@ -172,7 +172,7 @@ export const heading03 = {
 export const body01 = {
   fontFamily: fontFamilies.sans,
   fontWeight: fontWeights.regular,
-  fontSize: typeScale(1),
+  fontSize: typeScale[0],
   lineHeight: rem(16),
   letterSpacing: px(0.32),
 };
@@ -180,7 +180,7 @@ export const body01 = {
 export const body02 = {
   fontFamily: fontFamilies.sans,
   fontWeight: fontWeights.regular,
-  fontSize: typeScale(2),
+  fontSize: typeScale[1],
   lineHeight: rem(20),
   letterSpacing: px(0.16),
 };
@@ -188,7 +188,7 @@ export const body02 = {
 export const body03 = {
   fontFamily: fontFamilies.sans,
   fontWeight: fontWeights.regular,
-  fontSize: typeScale(3),
+  fontSize: typeScale[2],
   lineHeight: rem(24),
   letterSpacing: px(0),
 };

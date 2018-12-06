@@ -9,9 +9,23 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/*",
+      "www"
     ],
-    "nohoist": []
+    "nohoist": [
+      "**/gatsby",
+      "gatsby/**",
+      "**/gatsby-*",
+      "gatsby-*/**",
+      "**/*-gatsby",
+      "*-gatsby/**",
+      "**/babel-plugin-remove-graphql-queries",
+      "babel-plugin-remove-graphql-queries/**",
+      "**/eslint",
+      "eslint/**",
+      "**/eslint-*",
+      "eslint-*/**"
+    ]
   },
   "scripts": {
     "build": "lerna run build --stream --prefix --npm-client yarn",
