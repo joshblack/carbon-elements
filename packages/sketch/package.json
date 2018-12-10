@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "@carbon/colors": "0.0.1-alpha.17",
-    "@carbon/icons": "0.0.1-alpha.17"
+    "@carbon/icons": "0.0.1-alpha.17",
+    "@carbon/type": "0.0.1-alpha.17"
   },
   "devDependencies": {
     "@skpm/builder": "^0.5.11",
