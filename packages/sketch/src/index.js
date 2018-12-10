@@ -12,8 +12,56 @@ import {
 } from 'react-sketchapp';
 import { colors, tokens } from '@carbon/colors';
 import meta from '@carbon/icons/meta.json';
+import {
+  scale,
+  caption01,
+  label01,
+  helperText01,
+  bodyShort01,
+  bodyLong01,
+  bodyShort02,
+  bodyLong02,
+  code01,
+  code02,
+  heading01,
+  heading02,
+  heading03,
+  productiveHeading04,
+  productiveHeading05,
+  expressiveHeading04,
+  expressiveHeading05,
+  quotation01,
+  quotation02,
+  display01,
+  display02,
+  display03,
+  display04,
+} from '@carbon/type';
 
-const icon = meta[0];
+const type = {
+  caption01,
+  label01,
+  helperText01,
+  bodyShort01,
+  bodyLong01,
+  bodyShort02,
+  bodyLong02,
+  code01,
+  code02,
+  heading01,
+  heading02,
+  heading03,
+  productiveHeading04,
+  productiveHeading05,
+  expressiveHeading04,
+  expressiveHeading05,
+  quotation01,
+  quotation02,
+  display01,
+  display02,
+  display03,
+  display04,
+};
 
 function renderSvg({ elem, attrs = {}, content = [] }, i) {
   const tagName = elem[0].toUpperCase() + elem.slice(1);
@@ -50,7 +98,7 @@ export default () => {
     <View name="Elements">
       <View name="colors" style={{ display: 'flex', flexDirection: 'row' }}>
         {Object.keys(colors).map(key => (
-          <View key={key} style={{ padding: 16 }}>
+          <View key={key} style={{ width: 150, height: 150, padding: 16 }}>
             <View
               style={{
                 width: 50,
@@ -66,7 +114,7 @@ export default () => {
         name="Color tokens"
         style={{ display: 'flex', flexDirection: 'row' }}>
         {Object.keys(tokens).map(key => (
-          <View key={key} style={{ padding: 16 }}>
+          <View key={key} style={{ width: 150, height: 150, padding: 16 }}>
             <View
               style={{
                 width: 50,
@@ -78,21 +126,50 @@ export default () => {
           </View>
         ))}
       </View>
-
-      <View
-        name="Icons"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          flexWrap: 'row',
-          flexDirection: 'row',
-          width: 500,
-        }}>
-        {meta.slice(0, 50).map(icon => (
-          <Icon key={icon.outputOptions.moduleName} {...icon} />
-        ))}
+      <View name="Type">
+        {Object.keys(type)
+          .filter(key => {
+            if (type[key].fontSize.includes('calc')) {
+              return false;
+            }
+            return true;
+          })
+          .map(key => (
+            <View key={key} style={{ padding: 16 }}>
+              <Text>{key}</Text>
+              <Text style={convert(type[key])}>Text Sample</Text>
+            </View>
+          ))}
       </View>
     </View>,
     context.document.currentPage()
   );
 };
+
+function convert(token) {
+  return {
+    fontFamily: token.fontFamily.split(',')[0].replace(/'/g, ''),
+    fontSize: parseFloat(token.fontSize, 10) * 16,
+    lineHeight: token.lineHeight,
+    letterSpacing: parseFloat(token.letterSpacing, 10),
+  };
+  return {
+    ...Object.keys(token)
+      .filter(key => {
+        if (key.includes('@media')) {
+          return false;
+        }
+        if (typeof token[key] === 'string' && token[key].includes('calc')) {
+          return false;
+        }
+        return true;
+      })
+      .reduce(
+        (acc, key) => ({
+          ...acc,
+          [key]: token[key],
+        }),
+        {}
+      ),
+  };
+}

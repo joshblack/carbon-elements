@@ -20,15 +20,14 @@
     "access": "public"
   },
   "scripts": {
-    "build": "skpm-build",
     "watch": "skpm-build --watch",
     "render": "skpm-build --watch --run",
     "render:once": "skpm-build --run"
   },
   "dependencies": {
-    "@carbon/colors": "0.0.1-alpha.17",
-    "@carbon/icons": "0.0.1-alpha.17",
-    "@carbon/type": "0.0.1-alpha.17"
+    "@carbon/colors": "0.0.1-alpha.24",
+    "@carbon/icons": "0.0.1-alpha.24",
+    "@carbon/type": "0.0.1-alpha.24"
   },
   "devDependencies": {
     "@skpm/builder": "^0.5.11",
