@@ -5,14 +5,8 @@
 // LICENSE file in the root directory of this source tree.
 //
 
-@import 'reset';
 @import 'font-family';
+@import 'reset';
 @import 'scale';
 @import 'spacing';
 @import 'styles';
-@import 'font-face/mono';
-@import 'font-face/sans';
-@import 'classes';
-
-@include carbon--type-reset();
-@include carbon--type-classes();

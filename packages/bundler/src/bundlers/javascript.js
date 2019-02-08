@@ -104,10 +104,12 @@ async function bundle(entrypoint, options, info) {
   );
 }
 
-function formatGlobals(string) {
-  const mappings = string.split(',').map(mapping => {
-    return mapping.split('=');
-  });
+function formatGlobals(array) {
+  const mappings = array.map(string =>
+    string.split(',').map(mapping => {
+      return mapping.split('=');
+    })
+  );
   return mappings.reduce(
     (acc, [pkg, global]) => ({
       ...acc,

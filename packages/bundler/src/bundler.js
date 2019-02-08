@@ -84,31 +84,61 @@ async function bundler({ argv, cwd: getWorkingDirectory }) {
     }
   );
 
-  // program
-  // .command('bundle <entrypoint>')
-  // .description('bundle the given .js entrypoint')
-  // .option('-n, --name <name>', 'name the module for the UMD build')
-  // .option('-g, --globals <options>', 'global module names')
-  // .action((entrypoint, cmd) =>
-  // bundle(entrypoint, cleanArgs(cmd), {
-  // cwd,
-  // })
-  // );
+  cli.command(
+    'bundle <entrypoint>',
+    'bundle the given .js entrypoint',
+    {
+      name: {
+        alias: 'n',
+        describe: 'name the module for the UMD build',
+        demandOption: true,
+        type: 'string',
+      },
+      globals: {
+        alias: 'g',
+        describe: 'global module names',
+        array: true,
+        default: [],
+      },
+    },
+    async ({ entrypoint, ...args }) => {
+      await runCommand(() =>
+        bundle(entrypoint, args, {
+          cwd,
+        })
+      );
+    }
+  );
 
-  // program
-  // .command('bundle:scss <entrypoint>')
-  // .description('bundle the given .scss entrypoint')
-  // .option('-n, --name <name>', 'name the output file')
-  // .option(
-  // '-o, --output <dir>',
-  // 'specify the directory to output the files',
-  // 'css'
-  // )
-  // .action((entrypoint, cmd) =>
-  // bundle(entrypoint, cleanArgs(cmd), {
-  // cwd,
-  // })
-  // );
+  cli.command(
+    'bundle:scss <entrypoint>',
+    'bundle the given .scss entrypoint',
+    {
+      name: {
+        alias: 'n',
+        describe: 'the name of the output file',
+        type: 'string',
+      },
+      output: {
+        alias: 'a',
+        describe: 'the name of the directory',
+        type: 'string',
+        default: 'css',
+      },
+    },
+    async ({ entrypoint, ...args }) => {
+      await runCommand(() => bundle(entrypoint, args, { cwd }));
+    }
+  );
+
+  cli.command(
+    'inline',
+    'transform a scss directory to all inline exports',
+    {},
+    async args => {
+      //
+    }
+  );
 
   cli
     .demandCommand()
