@@ -10,6 +10,7 @@
 const { reporter } = require('@carbon/cli-reporter');
 const program = require('commander');
 const path = require('path');
+const cli = require('yargs');
 const packageJson = require('../package.json');
 const bundlers = require('./bundlers');
 const bundle = require('./commands/bundle');
@@ -20,95 +21,111 @@ async function bundler({ argv, cwd: getWorkingDirectory }) {
   const cwd = getWorkingDirectory();
 
   // prettier-ignore
-  program
-    .name(packageJson.name)
+  cli
+    .scriptName('bundler')
     .version(packageJson.version)
-    .usage('<command> [options]');
+    .usage('bundler <command> [options]');
 
   // check package(s) to see if scss files compile
-  program
-    .command('check <glob>')
-    .description('check that each file can be compiled')
-    .option('-i, --ignore <glob>', 'pass in a glob of files to ignore')
-    .option('-l, --list', 'list all the files that were compiled')
-    .action((pattern, cmd) =>
-      check(pattern, {
-        cwd,
-        list: cmd.list || false,
-        ignore: cmd.ignore || [],
-      })
-    );
+  cli.command(
+    'check <glob>',
+    'check that each file can be compiled',
+    {
+      ignore: {
+        alias: 'i',
+        describe: 'pass in a glob of files to ignore',
+        array: true,
+        default: [],
+      },
+      list: {
+        alias: 'l',
+        describe: 'list all the files that were compiled',
+        default: false,
+        type: 'boolean',
+      },
+    },
+    async args => {
+      const { glob, ignore, list } = args;
+      await runCommand(() =>
+        check(glob, {
+          cwd,
+          list,
+          ignore,
+        })
+      );
+    }
+  );
 
-  program
-    .command('measure <glob>')
-    .description('measure the compiled size of your package(s)')
-    .option('-i, --ignore <glob>', 'pass in a glob of files to ignore')
-    .option('-o, --output <path>', 'specify the output path of your report')
-    .action((pattern, cmd) =>
-      measure(pattern, {
-        cwd,
-        ignore: cmd.ignore,
-        output: cmd.output,
-      })
-    );
+  cli.command(
+    'measure <glob>',
+    'measure the compiled size of your package(s)',
+    {
+      ignore: {
+        alias: 'i',
+        describe: 'pass in a glob of files to ignore',
+        array: true,
+        default: [],
+      },
+      output: {
+        alias: 'o',
+        describe: 'specify the output path of your report',
+        type: 'string',
+      },
+    },
+    async args => {
+      const { glob, ignore, output } = args;
+      await runCommand(() =>
+        measure(glob, {
+          cwd,
+          ignore,
+          output,
+        })
+      );
+    }
+  );
 
-  program
-    .command('bundle <entrypoint>')
-    .description('bundle the given .js entrypoint')
-    .option('-n, --name <name>', 'name the module for the UMD build')
-    .option('-g, --globals <options>', 'global module names')
-    .action((entrypoint, cmd) =>
-      bundle(entrypoint, cleanArgs(cmd), {
-        cwd,
-      })
-    );
+  // program
+  // .command('bundle <entrypoint>')
+  // .description('bundle the given .js entrypoint')
+  // .option('-n, --name <name>', 'name the module for the UMD build')
+  // .option('-g, --globals <options>', 'global module names')
+  // .action((entrypoint, cmd) =>
+  // bundle(entrypoint, cleanArgs(cmd), {
+  // cwd,
+  // })
+  // );
 
-  program
-    .command('bundle:scss <entrypoint>')
-    .description('bundle the given .scss entrypoint')
-    .option('-n, --name <name>', 'name the output file')
-    .option(
-      '-o, --output <dir>',
-      'specify the directory to output the files',
-      'css'
-    )
-    .action((entrypoint, cmd) =>
-      bundle(entrypoint, cleanArgs(cmd), {
-        cwd,
-      })
-    );
+  // program
+  // .command('bundle:scss <entrypoint>')
+  // .description('bundle the given .scss entrypoint')
+  // .option('-n, --name <name>', 'name the output file')
+  // .option(
+  // '-o, --output <dir>',
+  // 'specify the directory to output the files',
+  // 'css'
+  // )
+  // .action((entrypoint, cmd) =>
+  // bundle(entrypoint, cleanArgs(cmd), {
+  // cwd,
+  // })
+  // );
 
-  program.parse(argv);
+  cli
+    .demandCommand()
+    .recommendCommands()
+    .strict()
+    .parse(argv.slice(2)).argv;
 }
 
-// Inspired by Vue CLI:
-// https://github.com/vuejs/vue-cli/blob/31e1b4995edef3d2079da654deedffe002a1d689/packages/%40vue/cli/bin/vue.js#L172
-function cleanArgs(command) {
-  return command.options.reduce((acc, option) => {
-    // TODO: add case for reserved words from commander, like options
-
-    // Add case for mapping `--foo-bar` to `fooBar`
-    const key = option.long
-      .replace(/^--/, '')
-      .split('-')
-      .map((word, i) => {
-        if (i === 0) {
-          return word;
-        }
-        return word[0].toUpperCase() + word.slice(1);
-      })
-      .join('');
-
-    // If an option is not present and Command has a method with the same name
-    // it should not be copied
-    if (typeof command[key] !== 'function') {
-      return {
-        ...acc,
-        [key]: command[key],
-      };
-    }
-    return acc;
-  }, {});
+async function runCommand(makePromise) {
+  try {
+    await makePromise();
+    console.log('Done! ✨');
+  } catch (error) {
+    reporter.error('Yikes, looks like something really went wrong.');
+    reporter.error('Please make an issue with the following info:');
+    console.log(error);
+  }
 }
 
 module.exports = bundler;
