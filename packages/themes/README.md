@@ -20,25 +20,28 @@ yarn add @carbon/themes
 
 ## Usage
 
-You can use `@carbon/themes` in JavaScript or Sass by including this package in
-your project. By default, `@carbon/themes` provides a set of color tokens that
-are pre-defined for a specific theme. Currently, we offer the following color
-themes: white, gray 10, gray 90, gray 100
+You can use `@carbon/themes` in JavaScript or Sass by including this
+package in your project. By default, `@carbon/themes` provides a set
+of color tokens that are pre-defined for a specific theme. Currently,
+we offer the following color themes: white, gray 10, gray 90, gray 100
 
-You can preview all of the token values for this on the [Carbon Design System
-website](https://next.carbondesignsystem.com/guidelines/color/usage).
+You can preview all of the token values for this on the [Carbon Design
+System website](https://next.carbondesignsystem.com/guidelines/color/usage)
+.
 
 ### Sass
 
 If you're project is using Sass, you can include this package and the
-corresponding default theme by writing the following in your Sass file:
+corresponding default theme by writing the following in your Sass
+file:
 
 ```scss
 @import '@carbon/themes/scss/themes';
 ```
 
-By default, the white theme will be initialized. If you would like to include
-another theme, you can do so by calling one of our theme mixins. For example:
+By default, the white theme will be initialized. If you would like to
+include another theme, you can do so by calling one of our theme
+mixins. For example:
 
 ```scss
 @import '@carbon/themes/scss/themes';
@@ -55,8 +58,8 @@ another theme, you can do so by calling one of our theme mixins. For example:
 
 ### JavaScript
 
-If you're looking to use these themes in JavaScript, we export a variety of
-bindings for you to use, including:
+If you're looking to use these themes in JavaScript, we export a
+variety of bindings for you to use, including:
 
 ```js
 import {
