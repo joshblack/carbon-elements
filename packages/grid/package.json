@@ -20,9 +20,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "yarn clean && bundler bundle:scss scss/grid.scss -n grid -s",
+    "clean": "rimraf css stats.json"
+  },
   "dependencies": {
-    "@carbon/import-once": "0.0.1-beta.1",
+    "@carbon/bundler": "0.0.1-beta.1",
     "@carbon/layout": "0.0.1-beta.1"
   },
   "eyeglass": {
@@ -30,5 +33,8 @@
     "name": "@carbon/grid",
     "sassDir": "scss",
     "needs": "^1.3.0"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.3"
   }
 }

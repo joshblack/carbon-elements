@@ -10,6 +10,7 @@
 const { reporter } = require('@carbon/cli-reporter');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
+const cssstats = require('cssstats');
 const fs = require('fs-extra');
 const path = require('path');
 const postcss = require('postcss');
@@ -58,6 +59,11 @@ async function bundle(entrypoint, options, info) {
     cssnano({
       preset: 'default',
     }),
+    cssstats({
+      safe: true,
+      mediaQueries: true,
+      importantDeclarations: true,
+    }),
   ]).process(compressed.result.css, {
     from: entrypoint,
     to: path.join(outputFolder, `${basename}.min.css`),
@@ -67,6 +73,39 @@ async function bundle(entrypoint, options, info) {
     path.join(outputFolder, `${basename}.min.css`),
     processedCompressed.css
   );
+
+  if (options.stats) {
+    const [cssstatsResult] = processedCompressed.messages.filter(
+      message => message.type === 'cssstats'
+    );
+    const { stats } = cssstatsResult;
+    const statsJson = {
+      size: stats.size,
+      gzipSize: stats.gzipSize,
+      rules: {
+        total: stats.rules.total,
+        size: {
+          average: stats.rules.size.average,
+          max: stats.rules.size.max,
+        },
+      },
+      selectors: stats.selectors,
+      declarations: {
+        total: stats.declarations.total,
+        unique: stats.declarations.unique,
+        properties: Object.keys(stats.declarations.properties),
+      },
+      mediaQueries: {
+        total: stats.mediaQueries.total,
+        unique: stats.mediaQueries.unique,
+        values: stats.mediaQueries.values,
+      },
+    };
+
+    await fs.writeJson(path.join(packageFolder, 'stats.json'), statsJson, {
+      spaces: 2,
+    });
+  }
 }
 
 module.exports = bundle;

@@ -14,6 +14,7 @@ const packageJson = require('../package.json');
 const bundlers = require('./bundlers');
 const bundle = require('./commands/bundle');
 const check = require('./commands/check');
+const inline = require('./commands/inline');
 const measure = require('./commands/measure');
 
 async function bundler({ argv, cwd: getWorkingDirectory }) {
@@ -72,8 +73,23 @@ async function bundler({ argv, cwd: getWorkingDirectory }) {
       'specify the directory to output the files',
       'css'
     )
+    .option('-s, --stats', 'specify whether to include stats in the result')
     .action((entrypoint, cmd) =>
       bundle(entrypoint, cleanArgs(cmd), {
+        cwd,
+      })
+    );
+
+  program
+    .command('inline <entrypoint>')
+    .description('inline sass dependencies in your project')
+    .option(
+      '-o, --output <dir>',
+      'specify the directory to output vendor files',
+      'scss'
+    )
+    .action((entrypoint, cmd) =>
+      inline(entrypoint, cleanArgs(cmd), {
         cwd,
       })
     );
