@@ -1,0 +1,13 @@
+{
+  "name": "release",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "bin": {
+    "carbon-release": "./bin/carbon-release.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "yargs": "^13.2.2"
+  }
+}
