@@ -7,9 +7,26 @@
 
 'use strict';
 
-const cli = require('./cli');
+const cli = require('yargs');
+const packageJson = require('../package.json');
+const commands = require('./commands');
 
 async function run({ argv, cwd }) {
+  const context = {
+    cwd: cwd(),
+  };
+
+  cli.scriptName(packageJson.name).version(packageJson.version);
+
+  for (const command of commands) {
+    command.apply(cli, context);
+  }
+
+  cli
+    .demandCommand()
+    .recommendCommands()
+    .strict();
+
   cli.parse(argv.slice(2)).argv;
 }
 
